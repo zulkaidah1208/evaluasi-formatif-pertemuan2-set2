@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluasi Formatif Pertemuan 2 — Set 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0fff4;
+      --primary: #16a34a;
+      --primary-dark: #15803d;
+      --primary-light: #dcfce7;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(22,163,74,0.10);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background-image:
+        radial-gradient(circle at 20% 20%, #bbf7d0 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #fef9c3 0%, transparent 50%);
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 440px;
+      border: 1px solid var(--border);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 6px; }
+    .pertemuan-label { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .input-wrap { position: relative; margin-bottom: 20px; }
+    .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 18px; pointer-events: none; }
+    input[type="number"] {
+      width: 100%; padding: 13px 16px 13px 42px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: inherit; font-size: 16px; font-weight: 600; color: var(--text);
+      background: #f8fafc; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type="number"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+      background: #fff;
+    }
+    button {
+      width: 100%; padding: 14px;
+      background: var(--primary); color: #fff; border: none; border-radius: 10px;
+      font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(22,163,74,0.25);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    button:hover { background: var(--primary-dark); box-shadow: 0 6px 20px rgba(22,163,74,0.30); }
+    button:active { transform: scale(0.98); }
+    #message {
+      margin-top: 16px; padding: 12px 16px; border-radius: 10px;
+      font-size: 13px; font-weight: 600; display: none; align-items: center; gap: 8px;
+    }
+    #message.error { background: #fef2f2; color: var(--error); border: 1px solid #fecaca; display: flex; }
+    #message.info { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; display: flex; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-item { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+    .info-item .lbl { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+    .info-item .val { font-size: 13px; font-weight: 700; color: var(--text); }
+    footer { margin-top: 20px; text-align: center; color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">📄 EF Pertemuan 2 · Set 2</div>
+  <h1>Cek Hasil Evaluasi Kamu</h1>
+  <p class="subtitle">Masukkan nomor urut absen untuk membuka PDF Evaluasi Formatif <b>Pertemuan 2 — Set 2</b>.</p>
+
+  <label for="absenInput">Nomor Urut Absen</label>
+  <div class="input-wrap">
+    <span class="input-icon">🔢</span>
+    <input type="number" id="absenInput" min="1" max="40" placeholder="Contoh: 12" />
+  </div>
+
+  <button onclick="bukaEvaluasi()"><span>📂</span> Buka Evaluasi Saya</button>
+  <div id="message"></div>
+
+  <hr class="divider" />
+
+  <div class="info-grid">
+    <div class="info-item"><div class="lbl">Pertemuan</div><div class="val">Pertemuan 2</div></div>
+    <div class="info-item"><div class="lbl">Set Soal</div><div class="val">Set 2</div></div>
+    <div class="info-item"><div class="lbl">Nomor Valid</div><div class="val">1 – 40</div></div>
+    <div class="info-item"><div class="lbl">Format</div><div class="val">PDF</div></div>
+  </div>
+</div>
+<footer>Hubungi dosen jika PDF tidak terbuka dengan benar.</footer>
+
+<script>
+  // ============================================================
+  // PETUNJUK: Ganti setiap "LINK_PDF_NOMOR_X" dengan
+  // link Google Drive PDF mahasiswa yang sesuai.
+  // Contoh: "https://drive.google.com/file/d/ABC123/view?usp=sharing"
+  // ============================================================
+  const pdfLinks = {
+    1: "https://drive.google.com/file/d/1NI94wrmckx_LJCvVJsOCNFsr9-Q7vNpW/view?usp=drive_link",
+    2: "https://drive.google.com/file/d/1yFm2gAtRlqav4pzkfT7PlIzKf-TeNdLk/view?usp=drive_link",
+    3: "https://drive.google.com/file/d/1MFL1SwH12IJERmxWRgA2VOOXpH0Th6sV/view?usp=drive_link",
+    4: "https://drive.google.com/file/d/1V3As8r_F1fCM-pclXRHAfJYz-1wuLN4g/view?usp=drive_link",
+    5: "https://drive.google.com/file/d/1Ve6fx7VMZVeDNZE7ehjuKlksxjUXlOGR/view?usp=drive_link",
+    6: "https://drive.google.com/file/d/1NbQBwLesVT-r2opl_ytPgMNrs3nvevTf/view?usp=drive_link",
+    7: "https://drive.google.com/file/d/1Wo3BERgLG0_Nw1hYngG_n7UkLmGN1MRP/view?usp=drive_link",
+    8: "https://drive.google.com/file/d/1Vpw-9_3vreVpVCLfOxNIjtitZGUK1EGz/view?usp=drive_link",
+    9: "https://drive.google.com/file/d/18ZUqF1nbeNy9BnL4p7GexmtzCkX33ZKN/view?usp=drive_link",
+    10: "https://drive.google.com/file/d/1sku4NEwmclky0UE3Xwiz5i6imi3ztphD/view?usp=drive_link",
+    11: "https://drive.google.com/file/d/1HMuttKG48JI7rNyw-sjF_mWoLiUdw9KW/view?usp=drive_link",
+    12: "https://drive.google.com/file/d/1E7JdCqKkilH7KrDnJvq2_ZvC0LSAQiwG/view?usp=drive_link",
+    13: "https://drive.google.com/file/d/1PM6zfZ5pd9nKXBueC8bIk5DdIb1qyOY8/view?usp=drive_link",
+    14: "https://drive.google.com/file/d/1pL9mup4OOZcbQk_jmQv1yF6Vn21uZPdH/view?usp=drive_link",
+    15: "https://drive.google.com/file/d/15ApeHREFTap6wV_SParQF4Ii-aMQ9EMd/view?usp=drive_link",
+    16: "https://drive.google.com/file/d/1IjB94PU0Smr4-SR3DfNj7bqfgvEKwO5J/view?usp=drive_link",
+    17: "https://drive.google.com/file/d/1ZDjfyWEyuFLpTRzP1ZkHg95Up4FaWcyz/view?usp=drive_link",
+    18: "https://drive.google.com/file/d/1i0eUpFuhaEu7aJZirJD9oFn7J9nUADE7/view?usp=drive_link",
+    19: "https://drive.google.com/file/d/1G5EskC3RZSR7fL-P5xJzPAkCDguwHBeA/view?usp=drive_link",
+    20: "https://drive.google.com/file/d/1NPzDDPs_8Fvf0Cgy37_AZLh2GSjK1gHK/view?usp=drive_link",
+    21: "https://drive.google.com/file/d/14pOmGh8CGu-L7rEgVhGzr8nWpsJFWnXV/view?usp=drive_link",
+    22: "https://drive.google.com/file/d/10tfzGS0zFeO0K8zd10p0ixBniKtPaaP8/view?usp=drive_link",
+    23: "https://drive.google.com/file/d/1-3eGNDeTnc21rLOMxHq5s9CsKdLEbnNq/view?usp=drive_link",
+    24: "https://drive.google.com/file/d/13YQ-qkFfDItJaqEDbWXtJpThaWB1O0Ac/view?usp=drive_link",
+    25: "https://drive.google.com/file/d/1Mauq6WUPW2dKWrE8e9oeabJ7OkNL8ogX/view?usp=drive_link",
+    26: "https://drive.google.com/file/d/1c6stc06IiefDAHb_tnJgsI_ykRDkwO-o/view?usp=drive_link",
+    27: "https://drive.google.com/file/d/1ac4j5rK8Y-AVbnqGlkaKIVVCD4pU8Ad_/view?usp=drive_link",
+    28: "https://drive.google.com/file/d/1immlkyUxF9ysUcc-4Q3xVH6ugEwHEZjz/view?usp=drive_link",
+    29: "https://drive.google.com/file/d/1cVTDs0zRrb0uIQAs6rdLsuPsWorb6HLH/view?usp=drive_link",
+    30: "https://drive.google.com/file/d/1BHhJsWPYoSlgfemdmiECLh5lFjR9n0qs/view?usp=drive_link",
+    31: "https://drive.google.com/file/d/1byyACPd6cIpiUMGC8PNKyIs5SBwGacAZ/view?usp=drive_link",
+    32: "https://drive.google.com/file/d/1P02hMOxNLzFXxHs8_vPo0ee_bbKRBgft/view?usp=drive_link",
+    33: "https://drive.google.com/file/d/1BsTa_tajgFLMzRiTFMkZAETzw7o3vqcd/view?usp=drive_link",
+    34: "https://drive.google.com/file/d/1de6NWMQ8cL7TQmxlP3HuXzqZBF9ZGou8/view?usp=drive_link",
+    35: "https://drive.google.com/file/d/1j1iRdotT2d_fslChUJv5IDiCTDsg0zDn/view?usp=drive_link",
+    36: "https://drive.google.com/file/d/1SfrzH4RvUqTwQJppc_LF2v-a5V3MiIrB/view?usp=drive_link",
+    37: "https://drive.google.com/file/d/1zc7SUHITh13xshRng65ol49nYwlQ_nKV/view?usp=drive_link",
+    38: "https://drive.google.com/file/d/1z2crsHg6ztf88K85m6ZBUVTvQNJYYLYr/view?usp=drive_link",
+    39: "https://drive.google.com/file/d/1lAFCC967Ff63IWG5exipkTHvSDE72kca/view?usp=drive_link",
+    40: "https://drive.google.com/file/d/1z5HSbaipmNuxrTG-hDEgrgbUhRafEjQ_/view?usp=drive_link",
+  };
+
+  function tampilkanPesan(teks, tipe) {
+    const el = document.getElementById("message");
+    el.textContent = teks;
+    el.className = tipe;
+  }
+
+  function bukaEvaluasi() {
+    const input = document.getElementById("absenInput");
+    const nomor = parseInt(input.value);
+    if (!input.value || isNaN(nomor)) {
+      tampilkanPesan("⚠️ Masukkan nomor absen terlebih dahulu.", "error"); return;
+    }
+    if (nomor < 1 || nomor > 40) {
+      tampilkanPesan("❌ Nomor absen tidak valid. Masukkan angka 1 sampai 40.", "error"); return;
+    }
+    const link = pdfLinks[nomor];
+    if (!link || link.startsWith("LINK_PDF_NOMOR")) {
+      tampilkanPesan("⚠️ Data untuk nomor " + nomor + " belum tersedia. Hubungi dosen.", "error"); return;
+    }
+    tampilkanPesan("✅ Membuka evaluasi nomor " + nomor + "...", "info");
+    setTimeout(() => { window.open(link, "_blank"); }, 500);
+  }
+
+  document.getElementById("absenInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") bukaEvaluasi();
+  });
+</script>
+</body>
+</html>
